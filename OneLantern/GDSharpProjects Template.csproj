@@ -5,4 +5,8 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>GDSharpProjectsTemplate</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+	<!-- <PackageReference Include="LimboAI" Version="*"/> -->
+  </ItemGroup>
 </Project>

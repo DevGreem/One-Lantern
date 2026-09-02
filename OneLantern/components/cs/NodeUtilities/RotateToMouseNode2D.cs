@@ -2,7 +2,7 @@ using Godot;
 #nullable enable
 
 [GlobalClass]
-public partial class FollowMouseNode2D : Node
+public partial class RotateToMouseNode2D : Node
 {
 	public Node2D? target;
 
