@@ -21,4 +21,5 @@ metadata/_custom_type_script = "uid://drku3nn2lf2ux"
 [node name="DebugNode" type="Node" parent="Camera2D" unique_id=1118805983 node_paths=PackedStringArray("target")]
 script = ExtResource("2_cp3qr")
 target = NodePath("..")
+onlyWorksWithOwner = true
 metadata/_custom_type_script = "uid://bgy2n25i4c4i0"
