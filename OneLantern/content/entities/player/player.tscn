@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bjpehthjlm6xn"]
+
+[ext_resource type="Script" uid="uid://drku3nn2lf2ux" path="res://components/cs/NodeUtilities/RotateToMouseNode2D.cs" id="1_e50yv"]
+[ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/DebugUtilities/DebugNode.cs" id="2_cp3qr"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
+size = Vector2(10, 10)
+
+[node name="Node2D" type="Node2D" unique_id=1682441876]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=314848315]
+texture = SubResource("PlaceholderTexture2D_obaep")
+
+[node name="RotateToMouseNode2D" type="Node" parent="." unique_id=1778598803 node_paths=PackedStringArray("target")]
+script = ExtResource("1_e50yv")
+target = NodePath("..")
+metadata/_custom_type_script = "uid://drku3nn2lf2ux"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=967244128]
+
+[node name="DebugNode" type="Node" parent="Camera2D" unique_id=1118805983 node_paths=PackedStringArray("target")]
+script = ExtResource("2_cp3qr")
+target = NodePath("..")
+metadata/_custom_type_script = "uid://bgy2n25i4c4i0"
