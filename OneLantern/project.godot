@@ -67,3 +67,9 @@ common/physics_ticks_per_second=120
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+
+[save_system]
+
+save_path=""
+auto_save=false
+save_time=-1.0

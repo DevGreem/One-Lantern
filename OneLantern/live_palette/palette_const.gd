@@ -4,16 +4,18 @@ class_name LivePalette
 
 ## The constants are the "Default" variant; switching variants at runtime goes
 ## through the LivePaletteRuntime autoload, which re-applies bound properties.
+const COLLISIONS := Color(0, 0.12156863, 0.77254903, 0.54901963)
 
 ## Palette name -> color, for lookups by a name held in a variable.
 ## Prefer the constants above: they are checked at compile time.
 const BY_NAME := {
+	"Collisions": COLLISIONS,
 }
 
 ## Variant name -> {name -> color}, for reading a variant you are not on.
 const VARIANTS := {
 	"Default": {
-
+		"Collisions": Color(0, 0.12156863, 0.77254903, 0.54901963),
 	},
 }
 

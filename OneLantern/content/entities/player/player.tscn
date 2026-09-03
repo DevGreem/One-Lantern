@@ -1,20 +1,38 @@
 [gd_scene format=3 uid="uid://bjpehthjlm6xn"]
 
-[ext_resource type="Script" uid="uid://drku3nn2lf2ux" path="res://components/cs/NodeUtilities/RotateToMouseNode2D.cs" id="1_e50yv"]
+[ext_resource type="Script" uid="uid://txrfg026awf8" path="res://components/cs/MovementSystem/RotateToMouseNode2D.cs" id="1_e50yv"]
 [ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/DebugUtilities/DebugNode.cs" id="2_cp3qr"]
+[ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/MovementSystem/MoveComponent2D.cs" id="2_lwocm"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(10, 10)
 
-[node name="Node2D" type="Node2D" unique_id=1682441876]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obaep"]
+size = Vector2(10, 10)
+
+[node name="Node2D" type="CharacterBody2D" unique_id=1199338818]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=314848315]
 texture = SubResource("PlaceholderTexture2D_obaep")
 
-[node name="RotateToMouseNode2D" type="Node" parent="." unique_id=1778598803 node_paths=PackedStringArray("target")]
+[node name="RotateToMouseNode2D" type="Node" parent="." unique_id=693996392 node_paths=PackedStringArray("target")]
 script = ExtResource("1_e50yv")
 target = NodePath("..")
-metadata/_custom_type_script = "uid://drku3nn2lf2ux"
+metadata/_custom_type_script = "uid://txrfg026awf8"
+
+[node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
+script = ExtResource("2_lwocm")
+Target = NodePath("..")
+Speed = 200.0
+Acceleration = 10.0
+metadata/_custom_type_script = "uid://c8gkyxgmv5gxy"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74993147]
+shape = SubResource("RectangleShape2D_obaep")
+debug_color = Color(0, 0.12156863, 0.77254903, 0.54901963)
+metadata/_live_palette_bindings = {
+"debug_color": "obaep"
+}
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=967244128]
 

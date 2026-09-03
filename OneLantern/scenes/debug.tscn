@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bvsn24xkpbcig"]
+
+[ext_resource type="PackedScene" uid="uid://bjpehthjlm6xn" path="res://content/entities/player/player.tscn" id="1_lgrwq"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
+size = Vector2(32, 32)
+
+[node name="Node2D" type="Node2D" unique_id=489940378]
+
+[node name="Node2D" parent="." unique_id=1199338818 instance=ExtResource("1_lgrwq")]
+
+[node name="TestSprite" type="Sprite2D" parent="." unique_id=180481462]
+position = Vector2(76, 20)
+texture = SubResource("PlaceholderTexture2D_obaep")
