@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 [GlobalClass, Icon("res://addons/at-icons/node/arrow_cross.svg")]
 public partial class MoveComponent2D : MoveComponent<Vector2>, ITarget<CharacterBody2D>
