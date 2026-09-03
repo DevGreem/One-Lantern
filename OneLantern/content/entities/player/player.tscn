@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bjpehthjlm6xn"]
 
-[ext_resource type="Script" uid="uid://txrfg026awf8" path="res://components/cs/MovementSystem/RotateToMouseNode2D.cs" id="1_e50yv"]
-[ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/DebugUtilities/DebugNode.cs" id="2_cp3qr"]
-[ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/MovementSystem/MoveComponent2D.cs" id="2_lwocm"]
+[ext_resource type="Script" uid="uid://txrfg026awf8" path="res://components/cs/Systems/Movement/RotateToMouseNode2D.cs" id="1_e50yv"]
+[ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/Utilities/Debug/DebugNode.cs" id="2_cp3qr"]
+[ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/Systems/Movement/MoveComponent2D.cs" id="2_lwocm"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(10, 10)
@@ -18,14 +18,12 @@ texture = SubResource("PlaceholderTexture2D_obaep")
 [node name="RotateToMouseNode2D" type="Node" parent="." unique_id=693996392 node_paths=PackedStringArray("target")]
 script = ExtResource("1_e50yv")
 target = NodePath("..")
-metadata/_custom_type_script = "uid://txrfg026awf8"
 
 [node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
 script = ExtResource("2_lwocm")
 Target = NodePath("..")
 Speed = 200.0
 Acceleration = 10.0
-metadata/_custom_type_script = "uid://c8gkyxgmv5gxy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74993147]
 shape = SubResource("RectangleShape2D_obaep")
@@ -40,4 +38,3 @@ metadata/_live_palette_bindings = {
 script = ExtResource("2_cp3qr")
 target = NodePath("..")
 onlyWorksWithOwner = true
-metadata/_custom_type_script = "uid://bgy2n25i4c4i0"
