@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, IActivable, ISmoothSpeed<float>
+public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, IActivable
 {
 
 	// [Signal]
@@ -35,53 +35,8 @@ public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, 
 	// 	}
 	// }
 
-	private float _speed = 0.0f;
-
 	[Export]
-	public float Speed
-	{
-		get => _speed;
-		set
-		{
-			if (Speed == value)
-				return;
-			
-			_speed = value;
-			EmitSignalSpeedChanged(Speed);
-		}
-	}
-
-	private float _acceleration = 0.0f;
-
-	[Export]
-	public float Acceleration
-	{
-		get => _acceleration;
-		set
-		{
-			if (Acceleration == value)
-				return;
-			
-			_acceleration = value;
-			EmitSignalAccelerationChanged(Acceleration);
-		}
-	}
-
-	private float _deceleration = 0.0f;
-
-	[Export]
-	public float Deceleration
-	{
-		get => _deceleration;
-		set
-		{
-			if (Deceleration == value)
-				return;
-			
-			_deceleration = value;
-			EmitSignalDecelerationChanged(Deceleration);
-		}
-	}
+	public SpeedDataResource SpeedData { get; private set; } = new();
 
 	[Export]
 	public bool canMove = true;

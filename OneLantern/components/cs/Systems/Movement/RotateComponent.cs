@@ -6,7 +6,7 @@ using Godot.Collections;
 
 [GlobalClass]
 [Tool]
-public partial class RotateComponent : Node, IActivable, ISmoothSpeed<float>
+public partial class RotateComponent : Node, IActivable
 {
 	[Export]
 	public bool Active { get; set; } = true;
@@ -34,13 +34,7 @@ public partial class RotateComponent : Node, IActivable, ISmoothSpeed<float>
 	}
 
 	[Export]
-	public float Speed { get; set; } = 1.0f;
-
-	[Export]
-	public float Acceleration { get; set; } = 1.0f;
-
-	[Export]
-	public float Deceleration { get; set; } = 1.0f;
+	public SpeedDataResource SpeedData { get; private set; } = new();
 
 	protected float _rotationVelocity = 0.0f;
 
@@ -72,12 +66,12 @@ public partial class RotateComponent : Node, IActivable, ISmoothSpeed<float>
 				return;
 			}
 
-			float desiredVelocity = Mathf.Sign(difference) * Speed;
+			float desiredVelocity = Mathf.Sign(difference) * SpeedData.Speed;
 
 			_rotationVelocity = Mathf.MoveToward(
 				_rotationVelocity,
 				desiredVelocity,
-				Acceleration * (float)delta
+				SpeedData.Acceleration * (float)delta
 			);
 
 			float rotationAmount = _rotationVelocity * (float)delta;

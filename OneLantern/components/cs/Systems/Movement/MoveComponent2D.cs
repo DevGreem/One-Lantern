@@ -32,11 +32,11 @@ public partial class MoveComponent2D : MoveComponent<Vector2>, ITarget<Character
 		{
 			if (Direction == Vector2.Zero)
 			{
-				Target.Velocity = Target.Velocity.MoveToward(Vector2.Zero, Deceleration*floatDelta);
+				Target.Velocity = Target.Velocity.MoveToward(Vector2.Zero, SpeedData.Deceleration*floatDelta);
 			}
 			else
 			{
-				Target.Velocity = Target.Velocity.MoveToward(Direction * Speed, Acceleration*floatDelta);
+				Target.Velocity = Target.Velocity.MoveToward(Direction * SpeedData.Speed, SpeedData.Acceleration*floatDelta);
 			}
 		}
 
@@ -48,7 +48,7 @@ public partial class MoveComponent2D : MoveComponent<Vector2>, ITarget<Character
 
 	protected override void CapSpeed()
 	{
-		Target.Velocity = Target.Velocity.LimitLength(Speed);
+		Target.Velocity = Target.Velocity.LimitLength(SpeedData.Speed);
 	}
 
 	public override Vector2 GetTargetVelocity() => Target.Velocity;

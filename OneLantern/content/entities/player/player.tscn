@@ -20,7 +20,6 @@ texture = SubResource("PlaceholderTexture2D_obaep")
 script = ExtResource("1_e50yv")
 target = NodePath("..")
 InstantRotation = false
-rotationSpeed = 5.0
 
 [node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
 script = ExtResource("2_lwocm")
