@@ -11,7 +11,7 @@ public partial class RotateToMouseNode2D : RotateComponent
 		if (target is null || !Active || Engine.IsEditorHint())
 			return;
 		
-		direction = target.GlobalPosition.DirectionTo(target.GetGlobalMousePosition());
+		AngleDirection = target.GlobalPosition.DirectionTo(target.GetGlobalMousePosition());
 		base._Process(delta);
 	}
 }

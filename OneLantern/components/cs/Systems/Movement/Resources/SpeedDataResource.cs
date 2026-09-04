@@ -61,7 +61,7 @@ public partial class SpeedDataResource : Resource, ISmoothSpeed<float>
 		}
 	}
 
-	public Vector2 LimitVelocity(Vector2 velocity)
+	public Vector2 LimitVelocity<V>(Vector2 velocity) 
 	{
 		return velocity.LimitLength(Speed);
 	}

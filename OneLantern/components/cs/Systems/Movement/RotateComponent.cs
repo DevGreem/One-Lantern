@@ -14,6 +14,28 @@ public partial class RotateComponent : Node, IActivable
 	[Export]
 	public Node2D? target;
 
+	public float RotationAngle { get; set; } = 0.0f;
+
+	[Export(PropertyHint.Range, "-180,180,0.1")]
+	private float RotationDegressAngle
+	{
+		get => Mathf.RadToDeg(RotationAngle);
+		set
+		{
+			RotationAngle = Mathf.DegToRad(value);
+		}
+	}
+
+	[Export]
+	public Vector2 AngleDirection
+	{
+		get => Vector2.FromAngle(RotationAngle);
+		set
+		{
+			RotationAngle = value.Angle();
+		}
+	}
+
 	[Export]
 	public float rotationOffsetDegrees = 0.0f;
 
@@ -34,18 +56,28 @@ public partial class RotateComponent : Node, IActivable
 	}
 
 	[Export]
-	public SpeedDataResource SpeedData { get; private set; } = new();
+	public SpeedDataResource RotationSpeedData { get; private set; } = new();
+
+	public float angleStartDecelerate = 0.001f;
+
+	[Export(PropertyHint.Range, "0,180,0.1")]
+	private float AngleDegressStartDecelerate
+	{
+		get => Mathf.RadToDeg(angleStartDecelerate);
+		set
+		{
+			angleStartDecelerate = Mathf.DegToRad(value);
+		}
+	}
 
 	protected float _rotationVelocity = 0.0f;
-
-	public Vector2 direction = Vector2.Zero;
 
 	public override void _Process(double delta)
 	{
 		if (target is null || !Active || Engine.IsEditorHint())
 			return;
 
-		float targetRotation = direction.Angle() + Mathf.DegToRad(rotationOffsetDegrees);
+		float targetRotation = RotationAngle + Mathf.DegToRad(rotationOffsetDegrees);
 
 		if (InstantRotation)
 		{
@@ -66,13 +98,17 @@ public partial class RotateComponent : Node, IActivable
 				return;
 			}
 
-			float desiredVelocity = Mathf.Sign(difference) * SpeedData.Speed;
 
-			_rotationVelocity = Mathf.MoveToward(
-				_rotationVelocity,
-				desiredVelocity,
-				SpeedData.Acceleration * (float)delta
-			);
+			if (angleStartDecelerate >= Math.Abs(difference))
+			{
+				ApplyVelocity(0f, RotationSpeedData.Deceleration * (float)delta);
+			}
+			else
+			{
+				float desiredVelocity = Mathf.Sign(difference) * RotationSpeedData.Speed;
+
+				ApplyVelocity(desiredVelocity, RotationSpeedData.Acceleration * (float)delta);
+			}
 
 			float rotationAmount = _rotationVelocity * (float)delta;
 
@@ -87,10 +123,19 @@ public partial class RotateComponent : Node, IActivable
 		}
 	}
 
+	protected void ApplyVelocity(float desiredVelocity, float delta)
+	{
+		_rotationVelocity = Mathf.MoveToward(
+			_rotationVelocity,
+			desiredVelocity,
+			delta
+		);
+	}
+
 	public override void _ValidateProperty(Dictionary property)
 	{
 		
-		string[] props = ["Speed", "Acceleration", "Deceleration"];
+		string[] props = [nameof(RotationSpeedData), nameof(angleStartDecelerate)];
 
 		if (props.Contains(property["name"].AsString()))
 		{

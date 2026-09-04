@@ -1,12 +1,22 @@
 [gd_scene format=3 uid="uid://bjpehthjlm6xn"]
 
 [ext_resource type="Script" uid="uid://txrfg026awf8" path="res://components/cs/Systems/Movement/RotateToMouseNode2D.cs" id="1_e50yv"]
+[ext_resource type="Script" uid="uid://brwgpq5meac5c" path="res://components/cs/Systems/Movement/Resources/SpeedDataResource.cs" id="2_55yfw"]
 [ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/Utilities/Debug/DebugNode.cs" id="2_cp3qr"]
 [ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/Systems/Movement/MoveComponent2D.cs" id="2_lwocm"]
 [ext_resource type="Script" uid="uid://cvjigkmxoowff" path="res://components/cs/Systems/Input/VectorMoveInputComponent2D.cs" id="4_t4ell"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(10, 10)
+
+[sub_resource type="Resource" id="Resource_55yfw"]
+script = ExtResource("2_55yfw")
+Speed = 10.0
+Acceleration = 5.0
+Deceleration = 5.0
+
+[sub_resource type="Resource" id="Resource_t2p4e"]
+script = ExtResource("2_55yfw")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obaep"]
 size = Vector2(10, 10)
@@ -19,14 +29,15 @@ texture = SubResource("PlaceholderTexture2D_obaep")
 [node name="RotateToMouseNode2D" type="Node" parent="." unique_id=693996392 node_paths=PackedStringArray("target")]
 script = ExtResource("1_e50yv")
 target = NodePath("..")
+AngleDirection = Vector2(1, 0)
 InstantRotation = false
+RotationSpeedData = SubResource("Resource_55yfw")
+AngleDegressStartDecelerate = 30.000002
 
 [node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
 script = ExtResource("2_lwocm")
 Target = NodePath("..")
-Speed = 50.0
-Acceleration = 300.0
-Deceleration = 250.0
+SpeedData = SubResource("Resource_t2p4e")
 
 [node name="VectorMoveInputComponent2D" type="Node" parent="." unique_id=1626044686 node_paths=PackedStringArray("InspectorTarget")]
 script = ExtResource("4_t4ell")

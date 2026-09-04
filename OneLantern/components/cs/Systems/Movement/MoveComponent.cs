@@ -19,22 +19,6 @@ public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, 
 	[Export]
 	public bool Active { get; set; } = true;
 
-	// private float _maxSpeed = float.MaxValue;
-
-	// [Export]
-	// public float MaxSpeed
-	// {
-	// 	get => _maxSpeed;
-	// 	set
-	// 	{
-	// 		if (MaxSpeed == value)
-	// 			return;
-			
-	// 		_maxSpeed = value;
-	// 		EmitSignalMaxSpeedChanged(MaxSpeed);
-	// 	}
-	// }
-
 	[Export]
 	public SpeedDataResource SpeedData { get; private set; } = new();
 
