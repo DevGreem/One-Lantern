@@ -1,11 +1,12 @@
 using System;
+using System.Linq;
 using Godot;
 using Godot.Collections;
 #nullable enable
 
 [GlobalClass]
 [Tool]
-public partial class RotateComponent : Node, IActivable
+public partial class RotateComponent : Node, IActivable, ISmoothSpeed<float>
 {
 	[Export]
 	public bool Active { get; set; } = true;
@@ -33,13 +34,13 @@ public partial class RotateComponent : Node, IActivable
 	}
 
 	[Export]
-	public float rotationSpeed = 1.0f;
+	public float Speed { get; set; } = 1.0f;
 
 	[Export]
-	public float rotationAcceleration = 1.0f;
+	public float Acceleration { get; set; } = 1.0f;
 
 	[Export]
-	public float rotationDeceleration = 1.0f;
+	public float Deceleration { get; set; } = 1.0f;
 
 	protected float _rotationVelocity = 0.0f;
 
@@ -71,12 +72,12 @@ public partial class RotateComponent : Node, IActivable
 				return;
 			}
 
-			float desiredVelocity = Mathf.Sign(difference) * rotationSpeed;
+			float desiredVelocity = Mathf.Sign(difference) * Speed;
 
 			_rotationVelocity = Mathf.MoveToward(
 				_rotationVelocity,
 				desiredVelocity,
-				rotationAcceleration * (float)delta
+				Acceleration * (float)delta
 			);
 
 			float rotationAmount = _rotationVelocity * (float)delta;
@@ -95,7 +96,9 @@ public partial class RotateComponent : Node, IActivable
 	public override void _ValidateProperty(Dictionary property)
 	{
 		
-		if (property["name"].AsString() == nameof(rotationSpeed))
+		string[] props = ["Speed", "Acceleration", "Deceleration"];
+
+		if (props.Contains(property["name"].AsString()))
 		{
 			if (!InstantRotation)
 				return;

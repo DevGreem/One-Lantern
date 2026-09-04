@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, IActivable
+public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, IActivable, ISmoothSpeed<float>
 {
 
 	// [Signal]
