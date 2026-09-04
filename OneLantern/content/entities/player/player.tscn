@@ -23,8 +23,18 @@ target = NodePath("..")
 [node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
 script = ExtResource("2_lwocm")
 Target = NodePath("..")
-Speed = 200.0
-Acceleration = 100.0
+Speed = 50.0
+Acceleration = 300.0
+Deceleration = 250.0
+
+[node name="VectorMoveInputComponent2D" type="Node" parent="." unique_id=1626044686 node_paths=PackedStringArray("InspectorTarget")]
+script = ExtResource("4_t4ell")
+InspectorTarget = NodePath("../MoveComponent2D")
+negativeX = &"left"
+positiveX = &"right"
+negativeY = &"up"
+positiveY = &"down"
+metadata/_custom_type_script = "uid://cvjigkmxoowff"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74993147]
 shape = SubResource("RectangleShape2D_obaep")
@@ -39,12 +49,3 @@ metadata/_live_palette_bindings = {
 script = ExtResource("2_cp3qr")
 target = NodePath("..")
 onlyWorksWithOwner = true
-
-[node name="VectorMoveInputComponent2D" type="Node" parent="." unique_id=1626044686 node_paths=PackedStringArray("InspectorTarget")]
-script = ExtResource("4_t4ell")
-InspectorTarget = NodePath("../MoveComponent2D")
-negativeX = &"left"
-positiveX = &"right"
-negativeY = &"up"
-positiveY = &"down"
-metadata/_custom_type_script = "uid://cvjigkmxoowff"

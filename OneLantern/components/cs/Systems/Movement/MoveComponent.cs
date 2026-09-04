@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node 
+public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node, IActivable
 {
 
 	// [Signal]
@@ -12,6 +12,12 @@ public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node
 
 	[Signal]
 	public delegate void AccelerationChangedEventHandler(float newValue);
+
+	[Signal]
+	public delegate void DecelerationChangedEventHandler(float newValue);
+
+	[Export]
+	public bool Active { get; set; } = true;
 
 	// private float _maxSpeed = float.MaxValue;
 
@@ -61,6 +67,22 @@ public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node
 		}
 	}
 
+	private float _deceleration = 0.0f;
+
+	[Export]
+	public float Deceleration
+	{
+		get => _deceleration;
+		set
+		{
+			if (Deceleration == value)
+				return;
+			
+			_deceleration = value;
+			EmitSignalDecelerationChanged(Deceleration);
+		}
+	}
+
 	[Export]
 	public bool canMove = true;
 
@@ -69,18 +91,8 @@ public abstract partial class MoveComponent<[MustBeVariant] VectorType> : Node
 
 	public virtual VectorType Direction { get; set; }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		AddAceleration(delta);
-		CapSpeed();
-		MoveAndSlideTarget();
-	}
-
 	public abstract VectorType GetTargetVelocity();
-
-	protected abstract void AddAceleration(double delta);
 
 	protected abstract void CapSpeed();
 
-	protected abstract void MoveAndSlideTarget();
 }
