@@ -1,8 +1,10 @@
+using System;
 using Godot;
 using Godot.Collections;
 #nullable enable
 
 [GlobalClass]
+[Tool]
 public partial class RotateComponent : Node, IActivable
 {
 	[Export]
@@ -31,32 +33,63 @@ public partial class RotateComponent : Node, IActivable
 	}
 
 	[Export]
-	public double rotationSpeed = 1.0;
+	public float rotationSpeed = 1.0f;
+
+	[Export]
+	public float rotationAcceleration = 1.0f;
+
+	[Export]
+	public float rotationDeceleration = 1.0f;
+
+	protected float _rotationVelocity = 0.0f;
 
 	public Vector2 direction = Vector2.Zero;
 
 	public override void _Process(double delta)
 	{
-		if (target is null || !Active)
+		if (target is null || !Active || Engine.IsEditorHint())
 			return;
+
+		float targetRotation = direction.Angle() + Mathf.DegToRad(rotationOffsetDegrees);
 
 		if (InstantRotation)
 		{
-			target.LookAt(direction);
+			target.Rotation = targetRotation;
+			_rotationVelocity = 0.0f;;
 		}
 		else
 		{
-			double targetRotation = direction.Angle();
-
-			target.Rotation = (float)Mathf.MoveToward(
+			float difference = Mathf.AngleDifference(
 				target.Rotation,
-				targetRotation,
-				rotationSpeed * delta
+				targetRotation
 			);
-		}
 
-		target.RotationDegrees += rotationOffsetDegrees;
-		GD.Print(nameof(RotateToMouseNode2D), ": ", target.RotationDegrees);
+			if (Mathf.Abs(difference) < 0.001f)
+			{
+				target.Rotation = targetRotation;
+				_rotationVelocity = 0.0f;
+				return;
+			}
+
+			float desiredVelocity = Mathf.Sign(difference) * rotationSpeed;
+
+			_rotationVelocity = Mathf.MoveToward(
+				_rotationVelocity,
+				desiredVelocity,
+				rotationAcceleration * (float)delta
+			);
+
+			float rotationAmount = _rotationVelocity * (float)delta;
+
+			if (Mathf.Abs(rotationAmount) >= Mathf.Abs(difference))
+			{
+				target.Rotation = targetRotation;
+				_rotationVelocity = 0.0f;
+			}
+			else {
+				target.Rotation += rotationAmount;
+			}
+		}
 	}
 
 	public override void _ValidateProperty(Dictionary property)
