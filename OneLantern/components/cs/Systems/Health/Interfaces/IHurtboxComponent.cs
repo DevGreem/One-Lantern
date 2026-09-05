@@ -18,7 +18,7 @@ public partial interface IHurtboxComponent<T> where T: INumber<T>
 
 	public bool EmitDamageOnInvincible { get; }
 
-	public bool ReceiveDamage(T cantity) => ReceiveDamage(cantity, false, false);
+	public bool ReceiveDamage(T cantity) => ReceiveDamage(cantity, true, false);
 
 	public bool ReceiveDamage(T cantity, bool activateInmunity) => ReceiveDamage(cantity, activateInmunity, false);
 
