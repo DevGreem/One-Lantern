@@ -10,6 +10,12 @@
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(10, 10)
 
+[sub_resource type="Resource" id="Resource_r5tfu"]
+script = ExtResource("2_r5tfu")
+_speed = 0.0
+_acceleration = 0.0
+_deceleration = 0.0
+
 [sub_resource type="Resource" id="Resource_1umn6"]
 script = ExtResource("2_r5tfu")
 Speed = 1000.0
@@ -18,6 +24,9 @@ Deceleration = 10.0
 
 [sub_resource type="Resource" id="Resource_t2p4e"]
 script = ExtResource("2_55yfw")
+Speed = null
+Acceleration = null
+Deceleration = null
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obaep"]
 size = Vector2(10, 10)
@@ -29,22 +38,31 @@ texture = SubResource("PlaceholderTexture2D_obaep")
 
 [node name="RotateToMouseNode2D" type="Node" parent="." unique_id=693996392 node_paths=PackedStringArray("target")]
 script = ExtResource("1_e50yv")
-target = NodePath("..")
+RotationAngle = 0.0
 AngleDirection = Vector2(1, 0)
+RotationSpeedData = SubResource("Resource_r5tfu")
 InspectorRotationSpeedData = SubResource("Resource_1umn6")
+target = NodePath("..")
+_instantRotation = true
+_rotationVelocity = 0.0
 
 [node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
 script = ExtResource("2_lwocm")
 Target = NodePath("..")
+Direction = null
+Active = null
 SpeedData = SubResource("Resource_t2p4e")
+canMove = null
+canChangeDirection = null
 
 [node name="VectorMoveInputComponent2D" type="Node" parent="." unique_id=1626044686 node_paths=PackedStringArray("InspectorTarget")]
 script = ExtResource("4_t4ell")
-InspectorTarget = NodePath("../MoveComponent2D")
 negativeX = &"left"
 positiveX = &"right"
 negativeY = &"up"
 positiveY = &"down"
+Target = null
+InspectorTarget = NodePath("../MoveComponent2D")
 metadata/_custom_type_script = "uid://cvjigkmxoowff"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74993147]
