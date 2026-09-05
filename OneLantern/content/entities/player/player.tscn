@@ -11,9 +11,9 @@ size = Vector2(10, 10)
 
 [sub_resource type="Resource" id="Resource_55yfw"]
 script = ExtResource("2_55yfw")
-Speed = 10.0
-Acceleration = 5.0
-Deceleration = 5.0
+Speed = 180.0
+Acceleration = 360.0
+Deceleration = 720.0
 
 [sub_resource type="Resource" id="Resource_t2p4e"]
 script = ExtResource("2_55yfw")

@@ -55,20 +55,11 @@ public partial class RotateComponent : Node, IActivable
 		}
 	}
 
+	/// <summary>
+	/// In Degress
+	/// </summary>
 	[Export]
 	public SpeedDataResource RotationSpeedData { get; private set; } = new();
-
-	public float angleStartDecelerate = 0.001f;
-
-	[Export(PropertyHint.Range, "0,180,0.1")]
-	private float AngleDegressStartDecelerate
-	{
-		get => Mathf.RadToDeg(angleStartDecelerate);
-		set
-		{
-			angleStartDecelerate = Mathf.DegToRad(value);
-		}
-	}
 
 	protected float _rotationVelocity = 0.0f;
 
@@ -82,7 +73,7 @@ public partial class RotateComponent : Node, IActivable
 		if (InstantRotation)
 		{
 			target.Rotation = targetRotation;
-			_rotationVelocity = 0.0f;;
+			_rotationVelocity = 0.0f;
 		}
 		else
 		{
@@ -98,16 +89,21 @@ public partial class RotateComponent : Node, IActivable
 				return;
 			}
 
-
-			if (angleStartDecelerate >= Math.Abs(difference))
+			float decelerationDistance = 0f;
+			if (RotationSpeedData.Deceleration > 0f)
 			{
-				ApplyVelocity(0f, RotationSpeedData.Deceleration * (float)delta);
+				decelerationDistance = Mathf.Pow(_rotationVelocity, 2) / (2f * Mathf.DegToRad(RotationSpeedData.Deceleration));
+			}
+
+			if (Math.Abs(difference) <= decelerationDistance)
+			{
+				ApplyVelocity(0f, Mathf.DegToRad(RotationSpeedData.Deceleration * (float)delta));
 			}
 			else
 			{
-				float desiredVelocity = Mathf.Sign(difference) * RotationSpeedData.Speed;
+				float desiredVelocity = Mathf.Sign(difference) * Mathf.DegToRad(RotationSpeedData.Speed);
 
-				ApplyVelocity(desiredVelocity, RotationSpeedData.Acceleration * (float)delta);
+				ApplyVelocity(desiredVelocity, Mathf.DegToRad(RotationSpeedData.Acceleration) * (float)delta);
 			}
 
 			float rotationAmount = _rotationVelocity * (float)delta;
@@ -135,7 +131,7 @@ public partial class RotateComponent : Node, IActivable
 	public override void _ValidateProperty(Dictionary property)
 	{
 		
-		string[] props = [nameof(RotationSpeedData), nameof(angleStartDecelerate)];
+		string[] props = [nameof(RotationSpeedData)];
 
 		if (props.Contains(property["name"].AsString()))
 		{
