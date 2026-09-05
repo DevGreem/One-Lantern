@@ -7,6 +7,9 @@ public partial class HurtboxComponent2D: Area2D, IHurtboxComponent<float>
 
 	[Signal]
 	public delegate void DamageReceivedEventHandler(float cantity);
+
+	[Export]
+	public Node Actor { get; set; }
 	
 	[Export]
 	public HealthComponent HealthNode { get; set; }

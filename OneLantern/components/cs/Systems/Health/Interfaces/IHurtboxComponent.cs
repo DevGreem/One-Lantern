@@ -10,6 +10,8 @@ public partial interface IHurtboxComponent<T> where T: INumber<T>
 
 	public HealthComponent HealthNode { get; }
 
+	public Node Actor { get; }
+
 	public float InmunityTime { get; }
 
 	public bool Invincible { get; set; }
