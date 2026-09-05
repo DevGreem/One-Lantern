@@ -4,7 +4,7 @@ using Godot;
 using Godot.Collections;
 #nullable enable
 
-[GlobalClass]
+[GlobalClass, Icon("res://addons/at-icons/node/arrows_clockwise.svg")]
 [Tool]
 public partial class RotateComponent : Node, IActivable
 {
@@ -16,7 +16,7 @@ public partial class RotateComponent : Node, IActivable
 
 	public float RotationAngle { get; set; } = 0.0f;
 
-	[Export(PropertyHint.Range, "-180,180,0.1")]
+	[Export(PropertyHint.Range, "-180,180,0.1,suffix:degress")]
 	private float RotationDegressAngle
 	{
 		get => Mathf.RadToDeg(RotationAngle);
@@ -58,10 +58,20 @@ public partial class RotateComponent : Node, IActivable
 	/// <summary>
 	/// In Degress
 	/// </summary>
+	public RotationSpeedDataResource RotationSpeedData { get; private set; } = new();
+
 	[Export]
-	public SpeedDataResource RotationSpeedData { get; private set; } = new();
+	private Resource InspectorRotationSpeedData { get; set; } = new RotationSpeedDataResource();
 
 	protected float _rotationVelocity = 0.0f;
+
+	public override void _Ready()
+	{
+		if (Engine.IsEditorHint())
+			return;
+
+		RotationSpeedData = ((RotationSpeedDataResource)InspectorRotationSpeedData).DegToRad();
+	}
 
 	public override void _Process(double delta)
 	{
@@ -73,50 +83,11 @@ public partial class RotateComponent : Node, IActivable
 		if (InstantRotation)
 		{
 			target.Rotation = targetRotation;
-			_rotationVelocity = 0.0f;
+			_rotationVelocity = 0f;
+			return;
 		}
-		else
-		{
-			float difference = Mathf.AngleDifference(
-				target.Rotation,
-				targetRotation
-			);
 
-			if (Mathf.Abs(difference) < 0.001f)
-			{
-				target.Rotation = targetRotation;
-				_rotationVelocity = 0.0f;
-				return;
-			}
-
-			float decelerationDistance = 0f;
-			if (RotationSpeedData.Deceleration > 0f)
-			{
-				decelerationDistance = Mathf.Pow(_rotationVelocity, 2) / (2f * Mathf.DegToRad(RotationSpeedData.Deceleration));
-			}
-
-			if (Math.Abs(difference) <= decelerationDistance)
-			{
-				ApplyVelocity(0f, Mathf.DegToRad(RotationSpeedData.Deceleration * (float)delta));
-			}
-			else
-			{
-				float desiredVelocity = Mathf.Sign(difference) * Mathf.DegToRad(RotationSpeedData.Speed);
-
-				ApplyVelocity(desiredVelocity, Mathf.DegToRad(RotationSpeedData.Acceleration) * (float)delta);
-			}
-
-			float rotationAmount = _rotationVelocity * (float)delta;
-
-			if (Mathf.Abs(rotationAmount) >= Mathf.Abs(difference))
-			{
-				target.Rotation = targetRotation;
-				_rotationVelocity = 0.0f;
-			}
-			else {
-				target.Rotation += rotationAmount;
-			}
-		}
+		// Future logic implementation for smooth rotation
 	}
 
 	protected void ApplyVelocity(float desiredVelocity, float delta)
@@ -131,14 +102,23 @@ public partial class RotateComponent : Node, IActivable
 	public override void _ValidateProperty(Dictionary property)
 	{
 		
-		string[] props = [nameof(RotationSpeedData)];
+		string[] props = [nameof(InspectorRotationSpeedData)];
 
 		if (props.Contains(property["name"].AsString()))
 		{
-			if (!InstantRotation)
-				return;
+			if (InstantRotation)
+			{
+				property["usage"] = (int)PropertyUsageFlags.NoEditor;
+			}
+			else
+			{
+				property["hint"] = (int)PropertyHint.ResourceType;
+				property["hint_string"] = nameof(RotationSpeedDataResource);
+			}
 			
-			property["usage"] = (int)PropertyUsageFlags.NoEditor;
+			//GD.Print(property["hint"], "\n", property["hint_string"]);
 		}
+
+		//GD.Print(property);
 	}
 }
