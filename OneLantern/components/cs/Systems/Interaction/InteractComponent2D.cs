@@ -28,9 +28,6 @@ public partial class InteractComponent2D: InteractComponent<Node2D, InteractionA
 	[Export]
 	public override Area2D InteractArea { get => base.InteractArea; protected set => base.InteractArea = value; }
 
-	[Export]
-	public override InteractionArea2D? FocusedInteractable { get => base.FocusedInteractable; set => base.FocusedInteractable = value; }
-
 	[Export(PropertyHint.Layers2DPhysics)]
 	public uint blockLayers = 0;
 
