@@ -11,8 +11,17 @@ public partial class MoveComponent2D : MoveComponent<Vector2>, ITarget<Character
 		protected set;
 	}
 
+	private Vector2 _direction = Vector2.Zero;
+
 	[Export]
-	public override Vector2 Direction { get; set; } = Vector2.Zero;
+	public override Vector2 Direction
+	{
+		get => _direction;
+		set
+		{
+			_direction = value.LimitLength(1f);
+		}
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -40,7 +49,10 @@ public partial class MoveComponent2D : MoveComponent<Vector2>, ITarget<Character
 			}
 		}
 
+		GD.Print($"{nameof(MoveComponent2D)}: Target.Velocity before CapSpeed = {Target.Velocity}");
 		CapSpeed();
+
+		GD.Print($"{nameof(MoveComponent2D)}: Target.Velocity after CapSpeed = {Target.Velocity}");
 		Target.MoveAndSlide();
 	}
 
