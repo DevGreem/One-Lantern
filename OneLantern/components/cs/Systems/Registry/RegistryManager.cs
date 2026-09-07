@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Numerics;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 #nullable enable
 
+[Tool]
 public partial class RegistryManager : Node
 {
 	public static RegistryManager Instance { get; private set; } = default!;
@@ -30,6 +27,9 @@ public partial class RegistryManager : Node
 
 	public override void _Ready()
 	{
+		if (Engine.IsEditorHint())
+			return;
+
 		_ = LoadProject();
 	}
 
