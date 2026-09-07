@@ -4,6 +4,8 @@ using Godot.Collections;
 public static partial class CanvasItemExtensions
 {
 	
+	public static bool CanReach(this CanvasItem obj, CanvasItem target, Array<Rid> exclude) => CanReach(obj, target, exclude, 0);
+
 	public static bool CanReach(this CanvasItem obj, CanvasItem target, Array<Rid> exclude, uint collisionMask = 0)
 	{
 		PhysicsDirectSpaceState2D space = obj.GetWorld2D().DirectSpaceState;
