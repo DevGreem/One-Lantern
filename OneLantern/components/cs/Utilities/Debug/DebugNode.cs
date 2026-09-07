@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class DebugNode : Node
+public partial class DebugNode : Node, IActivable
 {
 	[Export]
 	private Node target;
@@ -9,9 +9,12 @@ public partial class DebugNode : Node
 	[Export]
 	private bool onlyWorksWithOwner;
 
+	[Export]
+	public bool Active { get; set; } = true;
+
 	public override void _Ready()
 	{
-		if (!OS.IsDebugBuild())
+		if (!OS.IsDebugBuild() || !Active)
 		{
 			target.QueueFree();
 		}
