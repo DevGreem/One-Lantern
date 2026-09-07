@@ -1,10 +1,12 @@
 
-using System.Collections.Generic;
 #nullable enable
 
-public partial interface IRegistry<T> : IRegistry
+using Godot;
+using Godot.Collections;
+
+public partial interface IRegistry<[MustBeVariant] T> : IRegistry
 {
-	public IReadOnlyDictionary<string, T> Entries { get; }
+	public Dictionary<string, T> Entries { get; }
 
 	public bool Register(string id, T value);
 
