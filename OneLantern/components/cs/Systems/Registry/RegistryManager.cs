@@ -1,15 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Godot;
 #nullable enable
 
-[GlobalClass]
 public partial class RegistryManager : Node
 {
 	public static RegistryManager Instance { get; private set; } = default!;
 
 	private readonly Dictionary<string, IRegistry> _registries = new();
+
+	public bool IsLoaded { get; private set; } = false;
 
 	public RegistryManager()
 	{
@@ -20,6 +26,11 @@ public partial class RegistryManager : Node
 		}
 
 		Instance = this;
+	}
+
+	public override void _Ready()
+	{
+		_ = LoadProject();
 	}
 
 	/// <summary>
@@ -42,9 +53,47 @@ public partial class RegistryManager : Node
 		return true;
 	}
 
+	private bool AddRegistry(Type type)
+	{
+		IRegistry registry = (IRegistry)Activator.CreateInstance(type)!;
+		return AddRegistry(registry);
+	}
+
 	public bool RemoveRegistry(string id) => _registries.Remove(id);
 
 	public bool RemoveRegistry(RecordId id) => RemoveRegistry(id.ToString());
 
 	public bool RemoveRegistry(IRegistry registry) => RemoveRegistry(registry.Id);
+
+	private async Task LoadProject()
+	{
+		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+		
+		await Task.Run(() =>
+		{
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				LoadProjectRegistries(assembly);
+			}
+		});
+	}
+
+	private void LoadProjectRegistries(Assembly assembly)
+	{
+		foreach (var type in assembly.GetTypes())
+		{
+			foreach (var attribute in type.GetCustomAttributes<AddRegistryAttribute>())
+			{
+				if (!typeof(IRegistry).IsAssignableFrom(type))
+					continue;
+				
+				var result = AddRegistry(type);
+
+				if (result)
+					GD.Print($"{nameof(RegistryManager)}: Successfully added registry \"{type.FullName}\"");
+				else
+					GD.Print($"{nameof(RegistryManager)}: Error on add registry \"{type.FullName}\"");
+			}
+		}
+	}
 }

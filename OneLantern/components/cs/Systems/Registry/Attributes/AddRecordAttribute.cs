@@ -8,11 +8,9 @@ using Godot;
 public partial class AddRecordAttribute: Attribute
 {
 	public string RegistryId { get; }
-	public string Id { get; } 
 
-	public AddRecordAttribute(string registryId, string id)
+	public AddRecordAttribute(string registryId)
 	{
 		RegistryId = registryId;
-		Id = id;
 	}
 }

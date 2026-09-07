@@ -1,15 +1,21 @@
 using System.Collections.Generic;
+using System.Reflection;
 using Godot;
 #nullable enable
 
 public abstract partial class Registry<T> : Resource, IRegistry<T>
 {
 
-	public abstract RecordId Id { get; protected set; }
+	public abstract string Id { get; protected set; } 
 
 	private readonly Dictionary<string, T> _entries = new();
 
 	public IReadOnlyDictionary<string, T> Entries => _entries;
+
+	public Registry()
+	{
+		GD.Print($"{nameof(Registry)}: Successfully loaded, data starts as = {_entries}");
+	}
 
 	public bool Register(string id, T value)
 	{
@@ -27,4 +33,6 @@ public abstract partial class Registry<T> : Resource, IRegistry<T>
 	public T Get(string id) => _entries[id];
 
 	public bool Contains(string id) => _entries.ContainsKey(id);
+
+	protected abstract void LoadRecords();
 }

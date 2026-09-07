@@ -1,11 +1,8 @@
 
 using Godot;
 
-public partial interface IRegistry
-{
-
-	public abstract RecordId Id { get; }
-	
+public partial interface IRegistry: IUnique
+{	
 	public bool Unregister(string id);
 
 	public bool Unregister(RecordId id) => Unregister(id.ToString());

@@ -16,6 +16,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+RegistryManager="*uid://7eat7btlmcvg"
 PhantomCameraManager="*uid://duq6jhf6unyis"
 LivePaletteRuntime="*uid://d31r5bjbh1oer"
 SaveManager="*uid://dod6nr2f0iwu7"
