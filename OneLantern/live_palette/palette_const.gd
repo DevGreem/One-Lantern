@@ -8,6 +8,7 @@ const COLLISIONS := Color(0, 0.12156863, 0.77254903, 0.54901963)
 const HURTBOXES := Color(0.79607844, 0.49019608, 0.05490196, 0.6)
 const HITBOXES := Color(0.91764706, 0, 0, 0.5882353)
 const HEALBOXES := Color(0.14117648, 0.8117647, 0, 0.56078434)
+const INTERACTIONS := Color(0, 0.74987745, 0.827451, 0.36078432)
 
 ## Palette name -> color, for lookups by a name held in a variable.
 ## Prefer the constants above: they are checked at compile time.
@@ -16,6 +17,7 @@ const BY_NAME := {
 	"Hurtboxes": HURTBOXES,
 	"Hitboxes": HITBOXES,
 	"Healboxes": HEALBOXES,
+	"Interactions": INTERACTIONS,
 }
 
 ## Variant name -> {name -> color}, for reading a variant you are not on.
@@ -25,6 +27,7 @@ const VARIANTS := {
 		"Hurtboxes": Color(0.79607844, 0.49019608, 0.05490196, 0.6),
 		"Hitboxes": Color(0.91764706, 0, 0, 0.5882353),
 		"Healboxes": Color(0.14117648, 0.8117647, 0, 0.56078434),
+		"Interactions": Color(0, 0.74987745, 0.827451, 0.36078432),
 	},
 }
 

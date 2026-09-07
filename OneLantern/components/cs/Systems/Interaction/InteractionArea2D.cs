@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 
+[GlobalClass, Icon("res://addons/at-icons/node/push_button.svg")]
 public partial class InteractionArea2D: Area2D, IInteractionArea
 {
 	

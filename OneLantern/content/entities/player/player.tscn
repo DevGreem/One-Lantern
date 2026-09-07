@@ -23,6 +23,8 @@ script = ExtResource("2_55yfw")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obaep"]
 size = Vector2(10, 10)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_obaep"]
+
 [node name="Node2D" type="CharacterBody2D" unique_id=1199338818]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=314848315]
@@ -62,6 +64,18 @@ script = ExtResource("2_cp3qr")
 target = NodePath("..")
 onlyWorksWithOwner = true
 
-[node name="InteractComponent2D" type="Node" parent="." unique_id=485986331]
+[node name="InteractComponent2D" type="Node" parent="." unique_id=485986331 node_paths=PackedStringArray("Actor", "InteractArea")]
 script = ExtResource("7_t2p4e")
+Actor = NodePath("..")
+InteractArea = NodePath("Area2D")
+blockLayers = 64
 metadata/_custom_type_script = "uid://mssac83ubnjj"
+
+[node name="Area2D" type="Area2D" parent="InteractComponent2D" unique_id=849251222]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractComponent2D/Area2D" unique_id=1640955373]
+shape = SubResource("CircleShape2D_obaep")
+debug_color = Color(0, 0.74987745, 0.827451, 0.36078432)
+metadata/_live_palette_bindings = {
+"debug_color": "g04yl"
+}
