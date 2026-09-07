@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/Systems/Movement/MoveComponent2D.cs" id="2_lwocm"]
 [ext_resource type="Script" uid="uid://0upe3ifb5xsu" path="res://components/cs/Systems/Movement/Resources/RotationSpeedDataResource.cs" id="2_r5tfu"]
 [ext_resource type="Script" uid="uid://cvjigkmxoowff" path="res://components/cs/Systems/Input/VectorMoveInputComponent2D.cs" id="4_t4ell"]
-[ext_resource type="Script" uid="uid://mssac83ubnjj" path="res://components/cs/Systems/Interaction/InteractComponent2D.cs" id="7_t2p4e"]
+[ext_resource type="Script" uid="uid://mssac83ubnjj" path="res://components/cs/Systems/Interaction/InteractComponents/InteractComponent2D.cs" id="7_t2p4e"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(10, 10)

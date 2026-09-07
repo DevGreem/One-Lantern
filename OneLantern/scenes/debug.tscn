@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bvsn24xkpbcig"]
 
 [ext_resource type="PackedScene" uid="uid://bjpehthjlm6xn" path="res://content/entities/player/player.tscn" id="1_lgrwq"]
-[ext_resource type="Script" uid="uid://da0d52k66be2o" path="res://components/cs/Systems/Interaction/InteractionArea2D.cs" id="2_4pmxj"]
+[ext_resource type="Script" uid="uid://da0d52k66be2o" path="res://components/cs/Systems/Interaction/InteractionAreas/InteractionArea2D.cs" id="2_4pmxj"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(32, 32)

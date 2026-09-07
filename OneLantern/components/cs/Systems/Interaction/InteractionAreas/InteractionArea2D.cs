@@ -6,7 +6,7 @@ public partial class InteractionArea2D: Area2D, IInteractionArea
 {
 	
 	[Signal]
-	public delegate void InteractedEventHandler();
+	public delegate void InteractedEventHandler(Node node);
 
 	[Signal]
 	public delegate void FocusedEventHandler();
@@ -22,7 +22,7 @@ public partial class InteractionArea2D: Area2D, IInteractionArea
 		if (!Active)
 			return;
 		
-		EmitSignalInteracted();
+		EmitSignalInteracted(node);
 	}
 
 	public void Focus()
