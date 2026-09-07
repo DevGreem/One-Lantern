@@ -1,6 +1,6 @@
 using Godot;
 
-[GlobalClass]
+[GlobalClass, Icon("res://addons/at-icons/node/code.svg")]
 public partial class DebugNode : Node, IActivable
 {
 	[Export]
