@@ -4,7 +4,7 @@ using Godot.Collections;
 using System;
 
 [Tool]
-public partial class RegistryConfiguration : EditorPlugin
+public partial class ModdableRegistries : EditorPlugin
 {
 
 	public const string GROUP = "RegistryConfiguration";
