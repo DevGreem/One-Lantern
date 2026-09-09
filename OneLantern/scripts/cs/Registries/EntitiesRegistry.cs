@@ -6,10 +6,8 @@ using Godot.Collections;
 #nullable enable
 
 [GlobalClass]
-[AddRegistry]
-public partial class EntitiesRegistry: Registry<PackedScene>
+public partial class EntitiesRegistry: MRegistry<PackedScene>
 {
-	public override string Id { get; protected set; } = "entities";
 
 	[Export]
 	protected override Dictionary<string, PackedScene> InspectorEntries { get => base.InspectorEntries; set => base.InspectorEntries = value; }

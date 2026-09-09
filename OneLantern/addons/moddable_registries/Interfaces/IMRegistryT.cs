@@ -4,7 +4,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial interface IRegistry<[MustBeVariant] T> : IRegistry
+public partial interface IMRegistry<[MustBeVariant] T> : IMRegistry
 {
 	public Dictionary<string, T> Entries { get; }
 

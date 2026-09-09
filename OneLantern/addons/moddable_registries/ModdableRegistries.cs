@@ -15,11 +15,13 @@ public partial class ModdableRegistries : EditorPlugin
 	public override void _EnterTree()
 	{
 		SetupConfigs();
+		AddAutoloadSingleton(nameof(MRegistryManager), "res://addons/moddable_registries/Singletons/MRegistryManager.cs");
 	}
 
 	public override void _ExitTree()
 	{
 		RemoveConfigs();
+		RemoveAutoloadSingleton(nameof(MRegistryManager));
 	}
 
 	private void SetupConfigs()

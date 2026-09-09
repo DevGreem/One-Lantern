@@ -1,0 +1,10 @@
+[gd_resource type="Resource" format=3 uid="uid://b2ra7ddhag5bo"]
+
+[ext_resource type="Script" uid="uid://dpbgrl3v7secr" path="res://addons/moddable_registries/Registries/MRegistry.cs" id="1_fw2sg"]
+
+[resource]
+script = ExtResource("1_fw2sg")
+InspectorEntries = Dictionary[String, Resource]({})
+Id = "entities"
+RecordsPaths = PackedStringArray("")
+metadata/_custom_type_script = "uid://dpbgrl3v7secr"

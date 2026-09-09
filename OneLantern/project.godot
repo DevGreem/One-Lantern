@@ -20,10 +20,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-RegistryManager="*uid://7eat7btlmcvg"
 PhantomCameraManager="*uid://duq6jhf6unyis"
 LivePaletteRuntime="*uid://d31r5bjbh1oer"
 SaveManager="*uid://dod6nr2f0iwu7"
+MRegistryManager="*uid://7eat7btlmcvg"
 
 [debug]
 
@@ -46,7 +46,7 @@ project/assembly_name="GDSharpProjects Template"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/at-icons/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg", "res://addons/live_palette/plugin.cfg", "res://addons/moddable_registries/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/registry_configuration/plugin.cfg", "res://addons/registryconfiguration/plugin.cfg", "res://addons/scene_palette/plugin.cfg")
+enabled=PackedStringArray("res://addons/at-icons/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg", "res://addons/live_palette/plugin.cfg", "res://addons/moddable_registries/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/scene_palette/plugin.cfg")
 
 [input]
 

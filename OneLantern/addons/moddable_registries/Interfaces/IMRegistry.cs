@@ -1,7 +1,7 @@
 
 using Godot;
 
-public partial interface IRegistry: IUnique
+public partial interface IMRegistry: IUnique
 {	
 	public bool Unregister(string id);
 

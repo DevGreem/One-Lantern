@@ -1,17 +1,18 @@
-
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 #nullable enable
 
-public abstract partial class Registry<[MustBeVariant] T> : Resource, IRegistry<T> where T: Resource
+public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> where T: Resource
 {
 
 	[Signal]
 	public delegate void ReadyEventHandler();
 
-	public abstract string Id { get; protected set; } 
+	[Export]
+	public string Id { get; protected set; } = "";
 
 	[Export]
 	public string[] RecordsPaths { get; private set; } = [];
@@ -25,10 +26,20 @@ public abstract partial class Registry<[MustBeVariant] T> : Resource, IRegistry<
 
 	protected virtual Dictionary<string, T> InspectorEntries { get => Entries; set => Entries = value; }
 
-	public Registry()
+	public MRegistry()
 	{
-		_ = LoadPaths();
-		GD.Print($"{nameof(Registry)}: Successfully loaded, data starts as = {Entries}");
+		
+	}
+
+	public static implicit operator MRegistry<T>(MRegistry other)
+	{
+		MRegistry<T> resource = new();
+		resource.Id = other.Id;
+		resource.RecordsPaths = other.RecordsPaths;
+		resource.RecursiveSearch = other.RecursiveSearch;
+		resource.Entries = (other.Entries as Dictionary<string, T>)!;
+		
+		return resource;
 	}
 
 	public bool Register(string id, T value)
@@ -89,9 +100,11 @@ public abstract partial class Registry<[MustBeVariant] T> : Resource, IRegistry<
 				Path.GetFileName(file),
 				record
 			);
-			GD.Print($"{nameof(Registry)}: Loaded record {record} in registry \"{Id}\"");
+			GD.Print($"{nameof(MRegistry)}: Loaded record {record} in registry \"{Id}\"");
 		}
 
 		await Task.WhenAll(tasks);
+
+		GD.Print($"{nameof(MRegistry)}: Successfully loaded, data starts as = {Entries}");
 	}
 }
