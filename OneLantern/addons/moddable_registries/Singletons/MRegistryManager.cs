@@ -26,6 +26,9 @@ public partial class MRegistryManager : Node
 			return;
 		}
 
+		if (Engine.IsEditorHint())
+			return;
+
 		Instance = this;
 	}
 

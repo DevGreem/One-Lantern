@@ -20,8 +20,8 @@ public partial class ModdableRegistries : EditorPlugin
 
 	public override void _ExitTree()
 	{
-		RemoveConfigs();
 		RemoveAutoloadSingleton(nameof(MRegistryManager));
+		RemoveConfigs();
 	}
 
 	private void SetupConfigs()

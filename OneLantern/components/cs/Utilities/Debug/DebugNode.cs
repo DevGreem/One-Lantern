@@ -1,13 +1,14 @@
 using Godot;
 
 [GlobalClass, Icon("res://addons/at-icons/node/code.svg")]
+[Tool]
 public partial class DebugNode : Node, IActivable
 {
 	[Export]
 	private Node target;
 
 	[Export]
-	private bool onlyWorksWithOwner;
+	private bool onlyWorksWithOwner = true;
 
 	[Export]
 	public bool Active { get; set; } = true;
