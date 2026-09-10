@@ -54,15 +54,15 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		return true;
 	}
 
-	// public bool Register(string id, T value, RegisterType registerType)
-	// {
-		
-	// }
-
-	public void EditRecord(string id, T newValue)
+	public bool EditRecord(string id, T newValue)
 	{
+		T? record;
 
-		T record = Get(id);
+		bool status = TryGet(id, out record);
+		
+		if (!status)
+			return false;
+
 		foreach (var property in typeof(T).GetProperties())
 		{
 			if (!property.CanRead || !property.CanWrite)
@@ -70,6 +70,18 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 			
 			property.SetValue(record, property.GetValue(newValue));
 		}
+
+		return true;
+	}
+
+	public bool ReplaceRecord(string id, T newValue)
+	{
+
+		var status = Entries.ContainsKey(id);
+		
+		Entries[id] = newValue;
+
+		return !status;
 	}
 
 	public bool Unregister(string id) => Entries.Remove(id);
