@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://txrfg026awf8" path="res://components/cs/Systems/Movement/RotateToMouseNode2D.cs" id="1_e50yv"]
 [ext_resource type="Script" uid="uid://brwgpq5meac5c" path="res://components/cs/Systems/Movement/Resources/SpeedDataResource.cs" id="2_55yfw"]
-[ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/Utilities/Debug/DebugNode.cs" id="2_cp3qr"]
 [ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/Systems/Movement/MoveComponent2D.cs" id="2_lwocm"]
 [ext_resource type="Script" uid="uid://0upe3ifb5xsu" path="res://components/cs/Systems/Movement/Resources/RotationSpeedDataResource.cs" id="2_r5tfu"]
 [ext_resource type="Script" uid="uid://cvjigkmxoowff" path="res://components/cs/Systems/Input/VectorMoveInputComponent2D.cs" id="4_t4ell"]
@@ -78,11 +77,3 @@ blockLayers = 64
 metadata/_custom_type_script = "uid://mssac83ubnjj"
 
 [node name="Debug" type="Node" parent="." unique_id=1399926375]
-
-[node name="Camera2D" type="Camera2D" parent="Debug" unique_id=967244128]
-
-[node name="DebugNode" type="Node" parent="Debug/Camera2D" unique_id=1118805983 node_paths=PackedStringArray("target")]
-script = ExtResource("2_cp3qr")
-target = NodePath("..")
-onlyWorksWithOwner = true
-Active = false

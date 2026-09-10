@@ -66,6 +66,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 		IsReady = true;
 		EmitSignalReady();
+		GD.Print($"{nameof(MRegistry)}: Successfully loaded, data starts as = {Entries}");
 	}
 
 	private async Task LoadPaths()
@@ -103,15 +104,18 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		
 		foreach (string file in DirAccess.GetFilesAt(path))
 		{
-			if (!FileUtils.IsResource(file))
+
+			string filePath = path.PathJoin(file);
+
+			if (!ResourceLoader.Exists(filePath))
 				continue;
 			
-			LoadRecord(path.PathJoin(file));
+			LoadRecord(filePath);
 		}
 
 		await Task.WhenAll(tasks);
 
-		GD.Print($"{nameof(MRegistry)}: Successfully loaded, data starts as = {Entries}");
+		
 	}
 
 	protected virtual void LoadRecord(string file)

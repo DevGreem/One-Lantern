@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Godot;
@@ -69,11 +70,12 @@ public partial class MRegistryManager : Node
 	private void LoadProject()
 	{
 		
-		GD.Print($"{nameof(MRegistryManager)}: Loading project...");
+		GD.Print($"{nameof(MRegistryManager)}: Loading project [color=red]...[/color]");
 		LoadProjectRegistries();
 
 		IsReady = true;
 		EmitSignalReady();
+		GD.PrintRich($"{nameof(MRegistryManager)}: Project [color=green]loaded[/color]!");
 	}
 
 	private void LoadProjectRegistries()
@@ -83,10 +85,10 @@ public partial class MRegistryManager : Node
 
 		foreach (string file in files)
 		{
-			if (!FileUtils.IsResource(file))
-				continue;
-			
 			string path = ModdableRegistries.RegistriesPath.PathJoin(file);
+			
+			if (!ResourceLoader.Exists(path))
+				continue;
 			
 			var resource = ResourceLoader.Load<MRegistry>(path);
 
@@ -95,10 +97,16 @@ public partial class MRegistryManager : Node
 				GD.PushWarning($"{nameof(MRegistryManager)}: Loaded registry is not a {nameof(IMRegistry)}");
 				continue;
 			}
+
+			if (_registries.ContainsKey(resource.Id))
+			{
+				GD.Print($"{nameof(MRegistryManager)}: Registry {resource.Id} already added.");
+				continue;
+			}
 			
 			AddRegistry(resource);
 			_ = resource.Load();
-			GD.Print($"{nameof(MRegistryManager)}: Registry {file} loaded");
+			GD.Print($"{nameof(MRegistryManager)}: Registry {file} loaded!");
 		}
 	}
 }

@@ -34,5 +34,6 @@ public partial class MRegistry : MRegistry<Resource>
 			return;
 		
 		Register(Path.GetFileName(file), record);
+		GD.Print($"{nameof(MRegistry)}: Loaded record {file} in registry {this.Id} with value = {record}");
 	}
 }
