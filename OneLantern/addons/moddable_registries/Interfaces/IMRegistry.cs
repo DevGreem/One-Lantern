@@ -1,4 +1,5 @@
 
+using System.Threading.Tasks;
 using Godot;
 
 public partial interface IMRegistry: IUnique
@@ -10,5 +11,7 @@ public partial interface IMRegistry: IUnique
 	public bool Contains(string id);
 
 	public bool Contains(RecordId id) => Contains(id.ToString());
+
+	public Task Load();
 
 }

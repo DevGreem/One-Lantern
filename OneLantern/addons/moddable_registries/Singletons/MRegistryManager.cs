@@ -83,13 +83,19 @@ public partial class MRegistryManager : Node
 			if (!FileUtils.IsResource(file))
 				continue;
 			
-			var registry = ResourceLoader.Load<MRegistry>(file);
-
-			if (registry is not IMRegistry)
-				continue;
+			string path = ModdableRegistries.RegistriesPath.PathJoin(file);
 			
-			AddRegistry(registry);
-			_ = registry.Load();
+			var resource = ResourceLoader.Load<MRegistry>(path);
+
+			if (resource is not IMRegistry)
+			{
+				GD.PushWarning($"{nameof(MRegistryManager)}: Loaded registry is not a {nameof(IMRegistry)}");
+				continue;
+			}
+			
+			AddRegistry(resource);
+			_ = resource.Load();
+			GD.Print($"{nameof(MRegistryManager)}: Registry {file} loaded");
 		}
 	}
 }

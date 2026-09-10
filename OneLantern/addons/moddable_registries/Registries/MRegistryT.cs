@@ -74,6 +74,14 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 		foreach (string path in RecordsPaths)
 		{
+			var dirAccess = DirAccess.Open(path);
+
+			if (dirAccess is null)
+			{
+				GD.PrintErr($"{nameof(MRegistry)}: The path \"{path}\" don't exists");
+				continue;
+			}
+
 			tasks.Add(LoadRecords(path));
 		}
 
@@ -89,7 +97,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		{
 			foreach (string dir in DirAccess.GetDirectoriesAt(path))
 			{
-				tasks.Add(LoadRecords(dir));
+				tasks.Add(LoadRecords(path.PathJoin(dir)));
 			}
 		}
 		
@@ -98,7 +106,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 			if (!FileUtils.IsResource(file))
 				continue;
 			
-			LoadRecord(file);
+			LoadRecord(path.PathJoin(file));
 		}
 
 		await Task.WhenAll(tasks);
