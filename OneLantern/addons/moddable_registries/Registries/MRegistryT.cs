@@ -1,9 +1,9 @@
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 #nullable enable
+
 
 [Tool]
 public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> where T: Resource
@@ -34,11 +34,13 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	public static implicit operator MRegistry<T>(MRegistry other)
 	{
-		MRegistry<T> resource = new();
-		resource.Id = other.Id;
-		resource.RecordsPaths = other.RecordsPaths;
-		resource.RecursiveSearch = other.RecursiveSearch;
-		resource.Entries = (other.Entries as Dictionary<string, T>)!;
+		MRegistry<T> resource = new()
+		{
+			Id = other.Id,
+			RecordsPaths = other.RecordsPaths,
+			RecursiveSearch = other.RecursiveSearch,
+			Entries = (other.Entries as Dictionary<string, T>)!
+		};
 		
 		return resource;
 	}
@@ -50,6 +52,24 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		
 		Entries[id] = value;
 		return true;
+	}
+
+	// public bool Register(string id, T value, RegisterType registerType)
+	// {
+		
+	// }
+
+	public void EditRecord(string id, T newValue)
+	{
+
+		T record = Get(id);
+		foreach (var property in typeof(T).GetProperties())
+		{
+			if (!property.CanRead || !property.CanWrite)
+				continue;
+			
+			property.SetValue(record, property.GetValue(newValue));
+		}
 	}
 
 	public bool Unregister(string id) => Entries.Remove(id);
