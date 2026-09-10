@@ -5,6 +5,7 @@ using Godot;
 using Godot.Collections;
 #nullable enable
 
+[Tool]
 public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> where T: Resource
 {
 
@@ -28,7 +29,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	public MRegistry()
 	{
-		
+		Entries = InspectorEntries;
 	}
 
 	public static implicit operator MRegistry<T>(MRegistry other)
@@ -59,7 +60,15 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	public bool Contains(string id) => Entries.ContainsKey(id);
 
-	protected async Task LoadPaths()
+	public async Task Load()
+	{
+		await Task.Run(LoadPaths);
+
+		IsReady = true;
+		EmitSignalReady();
+	}
+
+	private async Task LoadPaths()
 	{
 		System.Collections.Generic.List<Task> tasks = new();
 
@@ -69,11 +78,9 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		}
 
 		await Task.WhenAll(tasks);
-
-		IsReady = true;
 	}
 
-	protected async Task LoadRecords(string path)
+	private async Task LoadRecords(string path)
 	{
 
 		System.Collections.Generic.List<Task> tasks = new();
@@ -91,20 +98,31 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 			if (!FileUtils.IsResource(file))
 				continue;
 			
-			T record = ResourceLoader.Load<T>(file);
-
-			if (record is not T)
-				continue;
-			
-			Register(
-				Path.GetFileName(file),
-				record
-			);
-			GD.Print($"{nameof(MRegistry)}: Loaded record {record} in registry \"{Id}\"");
+			LoadRecord(file);
 		}
 
 		await Task.WhenAll(tasks);
 
 		GD.Print($"{nameof(MRegistry)}: Successfully loaded, data starts as = {Entries}");
+	}
+
+	protected virtual void LoadRecord(string file)
+	{
+		T record = ResourceLoader.Load<T>(file);
+
+		if (record is not T)
+			return;
+		
+		Register(Path.GetFileName(file), record);
+		GD.Print($"{nameof(MRegistry)}: Loaded record {record} in registry \"{Id}\"");
+	}
+
+	public override void _ValidateProperty(Dictionary property)
+	{
+		
+		if (property["name"].AsStringName() != PropertyName.RecordsPaths)
+			return;
+		
+		property["hint_string"] = $"{(int)Variant.Type.String}/{(int)PropertyHint.Dir}:";
 	}
 }

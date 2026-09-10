@@ -49,10 +49,10 @@ public partial class MoveComponent2D : MoveComponent<Vector2>, ITarget<Character
 			}
 		}
 
-		GD.Print($"{nameof(MoveComponent2D)}: Target.Velocity before CapSpeed = {Target.Velocity}");
+		//GD.Print($"{nameof(MoveComponent2D)}: Target.Velocity before CapSpeed = {Target.Velocity}");
 		CapSpeed();
 
-		GD.Print($"{nameof(MoveComponent2D)}: Target.Velocity after CapSpeed = {Target.Velocity}");
+		//GD.Print($"{nameof(MoveComponent2D)}: Target.Velocity after CapSpeed = {Target.Velocity}");
 		Target.MoveAndSlide();
 	}
 

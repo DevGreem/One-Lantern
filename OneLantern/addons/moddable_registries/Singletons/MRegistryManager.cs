@@ -34,7 +34,7 @@ public partial class MRegistryManager : Node
 		if (Engine.IsEditorHint())
 			return;
 
-		_ = LoadProject();
+		LoadProject();
 	}
 
 	/// <summary>
@@ -50,17 +50,11 @@ public partial class MRegistryManager : Node
 
 	public bool AddRegistry(IMRegistry registry)
 	{
-		if (_registries.ContainsKey(registry.Id.ToString()))
+		if (_registries.ContainsKey(registry.Id))
 			return false;
 		
-		_registries.Add(registry.Id.ToString(), registry);
+		_registries.Add(registry.Id, registry);
 		return true;
-	}
-
-	private bool AddRegistry(Type type)
-	{
-		IMRegistry registry = (IMRegistry)Activator.CreateInstance(type)!;
-		return AddRegistry(registry);
 	}
 
 	public bool RemoveRegistry(string id) => _registries.Remove(id);
@@ -69,17 +63,17 @@ public partial class MRegistryManager : Node
 
 	public bool RemoveRegistry(IMRegistry registry) => RemoveRegistry(registry.Id);
 
-	private async Task LoadProject()
+	private void LoadProject()
 	{
 		
-		
-		await Task.Run(LoadProjectRegistries);
+		GD.Print($"{nameof(MRegistryManager)}: Loading project...");
+		LoadProjectRegistries();
 
 		IsReady = true;
 		EmitSignalReady();
 	}
 
-	private async Task LoadProjectRegistries()
+	private void LoadProjectRegistries()
 	{
 
 		var files = DirAccess.GetFilesAt(ModdableRegistries.RegistriesPath);
@@ -91,10 +85,11 @@ public partial class MRegistryManager : Node
 			
 			var registry = ResourceLoader.Load<MRegistry>(file);
 
-			if (registry is not MRegistry)
+			if (registry is not IMRegistry)
 				continue;
 			
 			AddRegistry(registry);
+			_ = registry.Load();
 		}
 	}
 }

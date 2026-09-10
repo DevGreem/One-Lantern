@@ -10,7 +10,7 @@ config_version=5
 
 [RegistryConfiguration]
 
-RegistriesPath=""
+RegistriesPath="res://registries"
 
 [application]
 
