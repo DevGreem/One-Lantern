@@ -4,5 +4,5 @@ using Godot;
 public partial class Record: Record<Resource>
 {
 	[Export]
-	public override Resource Value => base.Value;
+	public override Resource Value { get => base.Value; protected set => base.Value = value; }
 }
