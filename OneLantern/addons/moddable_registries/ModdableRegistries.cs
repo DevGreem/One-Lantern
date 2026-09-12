@@ -29,7 +29,7 @@ public partial class ModdableRegistries : EditorPlugin
 		
 		if (!ProjectSettings.HasSetting(REGISTRIES_PATH_CONFIG))
 		{
-			ProjectSettings.SetSetting(REGISTRIES_PATH_CONFIG, "");
+			ProjectSettings.SetSetting(REGISTRIES_PATH_CONFIG, "res://registries");
 			ProjectSettings.AddPropertyInfo(new Dictionary()
 			{
 				{ "name", REGISTRIES_PATH_CONFIG },

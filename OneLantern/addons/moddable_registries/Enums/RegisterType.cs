@@ -1,5 +1,5 @@
 
-public enum RegisterType
+public enum MRQueryType
 {
 	ADD, // Add a new record, if already exists don't add the new record
 	EDIT, // Edit an existent record, if don't exists, create a new record

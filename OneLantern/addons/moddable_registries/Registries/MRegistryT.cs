@@ -15,6 +15,8 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 	[Export]
 	public string Id { get; protected set; } = "";
 
+	[ExportGroup("Auto Record Inspection Configuration")]
+
 	[Export]
 	public string[] RecordsPaths { get; private set; } = [];
 
@@ -43,6 +45,20 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		};
 		
 		return resource;
+	}
+
+	public bool Query(string id, MRQueryType queryType, T value)
+	{
+		if (queryType == MRQueryType.ADD)
+			return Register(id, value);
+		
+		if (queryType == MRQueryType.EDIT)
+			return EditRecord(id, value);
+		
+		if (queryType == MRQueryType.REPLACE)
+			return ReplaceRecord(id, value);
+		
+		return false;
 	}
 
 	public bool Register(string id, T value)
