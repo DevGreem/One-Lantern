@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using Godot;
-using Godot.Collections;
+using GDColl = Godot.Collections;
 #nullable enable
 
 
@@ -25,9 +28,9 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	public bool IsReady { get; private set; } = false;
 
-	public Dictionary<string, T> Entries { get; protected set; } = new();
+	public GDColl.Dictionary<string, T> Entries { get; protected set; } = new();
 
-	protected virtual Dictionary<string, T> InspectorEntries { get => Entries; set => Entries = value; }
+	protected virtual GDColl.Dictionary<string, T> InspectorEntries { get => Entries; set => Entries = value; }
 
 	public MRegistry()
 	{
@@ -41,7 +44,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 			Id = other.Id,
 			RecordsPaths = other.RecordsPaths,
 			RecursiveSearch = other.RecursiveSearch,
-			Entries = (other.Entries as Dictionary<string, T>)!
+			Entries = (other.Entries as GDColl.Dictionary<string, T>)!
 		};
 		
 		return resource;
@@ -106,6 +109,19 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	public T Get(string id) => Entries[id];
 
+	public ReadOnlyCollection<T> GetIf(Func<T, bool> query)
+	{
+		List<T> values = [];
+		
+		foreach (var record in Entries)
+		{
+			if (query(record.Value))
+				values.Add(record.Value);
+		}
+
+		return values.AsReadOnly();
+	}
+
 	public bool Contains(string id) => Entries.ContainsKey(id);
 
 	public async Task Load()
@@ -119,7 +135,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	private async Task LoadPaths()
 	{
-		System.Collections.Generic.List<Task> tasks = new();
+		List<Task> tasks = new();
 
 		foreach (string path in RecordsPaths)
 		{
@@ -140,7 +156,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 	private async Task LoadRecords(string path)
 	{
 
-		System.Collections.Generic.List<Task> tasks = new();
+		List<Task> tasks = new();
 		
 		if (RecursiveSearch)
 		{
@@ -168,16 +184,16 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	protected virtual void LoadRecord(string file)
 	{
-		T record = ResourceLoader.Load<T>(file);
+		Resource resource = ResourceLoader.Load(file);
 
-		if (record is not T)
+		if (resource is not Record<T> record)
 			return;
 		
-		Register(Path.GetFileName(file), record);
-		GD.Print($"{nameof(MRegistry)}: Loaded record {record} in registry \"{Id}\"");
+		Query(record.Id, record.queryType, record.Value);;
+		GD.Print($"{nameof(MRegistry)}: Loaded record {record.Id} in registry \"{Id}\"");
 	}
 
-	public override void _ValidateProperty(Dictionary property)
+	public override void _ValidateProperty(GDColl.Dictionary property)
 	{
 		
 		if (property["name"].AsString() == nameof(RecordsPaths))

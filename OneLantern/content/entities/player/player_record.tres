@@ -1,7 +1,10 @@
-[gd_resource type="Resource" format=3 uid="uid://kjrry4kp8k8o"]
+[gd_resource type="Resource" script_class="Record" format=3 uid="uid://kjrry4kp8k8o"]
 
 [ext_resource type="Script" uid="uid://cf3uqqkqovsrv" path="res://addons/moddable_registries/Records/Record.cs" id="1_52fum"]
+[ext_resource type="PackedScene" uid="uid://bjpehthjlm6xn" path="res://content/entities/player/player.tscn" id="1_uv25c"]
 
 [resource]
 script = ExtResource("1_52fum")
+Value = ExtResource("1_uv25c")
+Id = "player123"
 metadata/_custom_type_script = "uid://cf3uqqkqovsrv"

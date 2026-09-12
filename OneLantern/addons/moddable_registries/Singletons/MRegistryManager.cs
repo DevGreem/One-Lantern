@@ -11,7 +11,7 @@ public partial class MRegistryManager : Node
 {
 
 	[Signal]
-	public delegate void ReadyEventHandler();
+	public delegate void LoadedEventHandler();
 
 	public static MRegistryManager Instance { get; private set; } = default!;
 
@@ -74,7 +74,7 @@ public partial class MRegistryManager : Node
 		LoadProjectRegistries();
 
 		IsReady = true;
-		EmitSignalReady();
+		EmitSignalLoaded();
 		GD.PrintRich($"{nameof(MRegistryManager)}: Project [color=green]loaded[/color]!");
 	}
 
