@@ -2,11 +2,23 @@
 
 [ext_resource type="Script" uid="uid://txrfg026awf8" path="res://components/cs/Systems/Movement/RotateToMouseNode2D.cs" id="1_e50yv"]
 [ext_resource type="Script" uid="uid://c8gkyxgmv5gxy" path="res://components/cs/Systems/Movement/MoveComponent2D.cs" id="2_lwocm"]
+[ext_resource type="Script" uid="uid://0upe3ifb5xsu" path="res://components/cs/Systems/Movement/Resources/RotationSpeedDataResource.cs" id="2_r5tfu"]
+[ext_resource type="Script" uid="uid://brwgpq5meac5c" path="res://components/cs/Systems/Movement/Resources/SpeedDataResource.cs" id="4_t2p4e"]
 [ext_resource type="Script" uid="uid://cvjigkmxoowff" path="res://components/cs/Systems/Input/VectorMoveInputComponent2D.cs" id="4_t4ell"]
+[ext_resource type="Script" uid="uid://bgy2n25i4c4i0" path="res://components/cs/Utilities/Debug/DebugNode.cs" id="7_1umn6"]
 [ext_resource type="Script" uid="uid://mssac83ubnjj" path="res://components/cs/Systems/Interaction/InteractComponents/InteractComponent2D.cs" id="7_t2p4e"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obaep"]
 size = Vector2(10, 10)
+
+[sub_resource type="Resource" id="Resource_1umn6"]
+script = ExtResource("2_r5tfu")
+
+[sub_resource type="Resource" id="Resource_i83cd"]
+script = ExtResource("4_t2p4e")
+Speed = 100.0
+Acceleration = 600.0
+Deceleration = 800.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obaep"]
 size = Vector2(10, 10)
@@ -19,14 +31,24 @@ y_sort_enabled = true
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=314848315]
 texture = SubResource("PlaceholderTexture2D_obaep")
 
-[node name="RotateToMouseNode2D" type="Node" parent="." unique_id=693996392]
+[node name="RotateToMouseNode2D" type="Node" parent="." unique_id=693996392 node_paths=PackedStringArray("target")]
 script = ExtResource("1_e50yv")
+target = NodePath("..")
+AngleDirection = Vector2(1, 0)
+InspectorRotationSpeedData = SubResource("Resource_1umn6")
 
-[node name="MoveComponent2D" type="Node" parent="." unique_id=128488804]
+[node name="MoveComponent2D" type="Node" parent="." unique_id=128488804 node_paths=PackedStringArray("Target")]
 script = ExtResource("2_lwocm")
+Target = NodePath("..")
+SpeedData = SubResource("Resource_i83cd")
 
-[node name="VectorMoveInputComponent2D" type="Node" parent="." unique_id=1626044686]
+[node name="VectorMoveInputComponent2D" type="Node" parent="." unique_id=1626044686 node_paths=PackedStringArray("InspectorTarget")]
 script = ExtResource("4_t4ell")
+InspectorTarget = NodePath("../MoveComponent2D")
+negativeX = &"left"
+positiveX = &"right"
+negativeY = &"up"
+positiveY = &"down"
 metadata/_custom_type_script = "uid://cvjigkmxoowff"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74993147]
@@ -45,8 +67,19 @@ metadata/_live_palette_bindings = {
 "debug_color": "g04yl"
 }
 
-[node name="InteractComponent2D" type="Node" parent="." unique_id=485986331]
+[node name="InteractComponent2D" type="Node" parent="." unique_id=485986331 node_paths=PackedStringArray("Actor", "InteractArea")]
 script = ExtResource("7_t2p4e")
+Actor = NodePath("..")
+InteractArea = NodePath("../InteractArea")
+blockLayers = 64
 metadata/_custom_type_script = "uid://mssac83ubnjj"
 
 [node name="Debug" type="Node" parent="." unique_id=1399926375]
+
+[node name="Camera2D" type="Camera2D" parent="Debug" unique_id=1743849317]
+
+[node name="DebugNode" type="Node" parent="Debug/Camera2D" unique_id=1028068078 node_paths=PackedStringArray("target")]
+script = ExtResource("7_1umn6")
+target = NodePath("..")
+Active = false
+metadata/_custom_type_script = "uid://bgy2n25i4c4i0"
