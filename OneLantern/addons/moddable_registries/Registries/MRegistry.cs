@@ -21,7 +21,10 @@ public partial class MRegistry : MRegistry<Resource>
 
 	protected override void LoadRecord(string file)
 	{
-		Resource record = ResourceLoader.Load(file);
+		Resource loadedResource = ResourceLoader.Load(file);
+
+		if (loadedResource is not Record record)
+			return;
 
 		bool correctType = false;
 		Type recordType = record.GetType();
@@ -38,7 +41,7 @@ public partial class MRegistry : MRegistry<Resource>
 		if (!correctType)
 			return;
 		
-		Register(Path.GetFileName(file), record);
-		GD.Print($"{nameof(MRegistry)}: Loaded record {file} in registry {this.Id} with value = {record}");
+		Query(record.Id, record.QueryType, record.Value);
+		GD.Print($"{nameof(MRegistry)}: Loaded record {file} in registry {this.Id} with value = {record.Value}");
 	}
 }

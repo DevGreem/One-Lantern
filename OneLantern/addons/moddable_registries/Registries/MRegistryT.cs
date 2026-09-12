@@ -30,7 +30,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 
 	public GDColl.Dictionary<string, T> Entries { get; protected set; } = new();
 
-	protected virtual GDColl.Dictionary<string, T> InspectorEntries { get => Entries; set => Entries = value; }
+	protected virtual GDColl.Dictionary<string, T> InspectorEntries { get; set; } = new();
 
 	public MRegistry()
 	{
@@ -186,10 +186,10 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 	{
 		Resource resource = ResourceLoader.Load(file);
 
-		if (resource is not Record<T> record)
+		if (resource is not IMRecord<T> record)
 			return;
 		
-		Query(record.Id, record.queryType, record.Value);;
+		Query(record.Id, record.QueryType, record.Value);;
 		GD.Print($"{nameof(MRegistry)}: Loaded record {record.Id} in registry \"{Id}\"");
 	}
 

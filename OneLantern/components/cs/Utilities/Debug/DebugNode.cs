@@ -16,6 +16,9 @@ public partial class DebugNode : Node, IActivable
 
 	public override void _Ready()
 	{
+		if (Engine.IsEditorHint())
+			return;
+
 		if (target is null)
 		{
 			GD.PushWarning($"{nameof(DebugNode)}: Target not assigned");
