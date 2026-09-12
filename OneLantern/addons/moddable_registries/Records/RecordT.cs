@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Record<T>: Resource, IUnique where T: Resource
+public partial class Record<T>: Resource, IMRecord<T> where T: Resource
 {
 	[Export]
 	public string Id { get; private set; }
@@ -8,6 +8,6 @@ public partial class Record<T>: Resource, IUnique where T: Resource
 	public virtual T Value { get; protected set; }
 
 	[Export]
-	public MRQueryType queryType = MRQueryType.ADD;
+	public MRQueryType QueryType { get; private set; } = MRQueryType.ADD;
 	
 }
