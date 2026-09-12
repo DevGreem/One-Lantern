@@ -1,0 +1,7 @@
+[gd_resource type="Resource" format=3 uid="uid://kjrry4kp8k8o"]
+
+[ext_resource type="Script" uid="uid://cf3uqqkqovsrv" path="res://addons/moddable_registries/Records/Record.cs" id="1_52fum"]
+
+[resource]
+script = ExtResource("1_52fum")
+metadata/_custom_type_script = "uid://cf3uqqkqovsrv"

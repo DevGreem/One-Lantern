@@ -180,7 +180,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 	public override void _ValidateProperty(Dictionary property)
 	{
 		
-		if (property["name"].AsStringName() != PropertyName.RecordsPaths)
+		if (property["name"].AsString() == nameof(RecordsPaths))
 			return;
 		
 		property["hint_string"] = $"{(int)Variant.Type.String}/{(int)PropertyHint.Dir}:";

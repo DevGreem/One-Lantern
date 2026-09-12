@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MRegistry" format=3 uid="uid://b2ra7ddhag5bo"]
+[gd_resource type="Resource" format=3 uid="uid://b2ra7ddhag5bo"]
 
 [ext_resource type="Script" uid="uid://dpbgrl3v7secr" path="res://addons/moddable_registries/Registries/MRegistry.cs" id="1_fw2sg"]
 
@@ -6,9 +6,11 @@
 
 [resource]
 script = ExtResource("1_fw2sg")
-InspectorEntries = Dictionary[String, Resource]({})
-_searchTypes = [SubResource("PackedScene_fw2sg")]
 Id = "entities"
 RecordsPaths = PackedStringArray("res://content/entities")
 RecursiveSearch = true
+IsReady = false
+Entries = Dictionary[String, Resource]({})
+InspectorEntries = Dictionary[String, Resource]({})
+_searchTypes = [SubResource("PackedScene_fw2sg")]
 metadata/_custom_type_script = "uid://dpbgrl3v7secr"
