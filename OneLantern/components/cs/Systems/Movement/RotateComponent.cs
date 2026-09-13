@@ -61,7 +61,7 @@ public partial class RotateComponent : Node, IActivable
 	public RotationSpeedDataResource RotationSpeedData { get; private set; } = new();
 
 	[Export]
-	private Resource InspectorRotationSpeedData { get; set; } = new RotationSpeedDataResource();
+	private Resource? InspectorRotationSpeedData { get; set; }
 
 	protected float _rotationVelocity = 0.0f;
 
@@ -70,7 +70,10 @@ public partial class RotateComponent : Node, IActivable
 		if (Engine.IsEditorHint())
 			return;
 
-		RotationSpeedData = ((RotationSpeedDataResource)InspectorRotationSpeedData).DegToRad();
+		if (InspectorRotationSpeedData is not null)
+		{
+			RotationSpeedData = ((RotationSpeedDataResource)InspectorRotationSpeedData).DegToRad();
+		}
 	}
 
 	public override void _Process(double delta)

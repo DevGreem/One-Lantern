@@ -70,6 +70,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 			return false;
 		
 		Entries[id] = value;
+		GD.Print($"{nameof(MRegistry)}: Registered record with id \"{id}\"");
 		return true;
 	}
 
@@ -89,6 +90,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 			
 			property.SetValue(record, property.GetValue(newValue));
 		}
+		GD.Print($"{nameof(MRegistry)}: Edited record with id \"{id}\"");
 
 		return true;
 	}
@@ -100,10 +102,21 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 		
 		Entries[id] = newValue;
 
+		if (status)
+			GD.Print($"{nameof(MRegistry)}: Replaced record with id \"{id}\"");
+
 		return !status;
 	}
 
-	public bool Unregister(string id) => Entries.Remove(id);
+	public bool Unregister(string id)
+	{
+		var status = Entries.Remove(id);
+
+		if (status)
+			GD.Print($"{nameof(MRegistry)}: Removed record with id \"{id}\"");
+		
+		return status;
+	}
 
 	public bool TryGet(string id, out T? value) => Entries.TryGetValue(id, out value);
 
@@ -196,7 +209,7 @@ public partial class MRegistry<[MustBeVariant] T> : Resource, IMRegistry<T> wher
 	public override void _ValidateProperty(GDColl.Dictionary property)
 	{
 		
-		if (property["name"].AsString() == nameof(RecordsPaths))
+		if (property["name"].AsString() != nameof(RecordsPaths))
 			return;
 		
 		property["hint_string"] = $"{(int)Variant.Type.String}/{(int)PropertyHint.Dir}:";

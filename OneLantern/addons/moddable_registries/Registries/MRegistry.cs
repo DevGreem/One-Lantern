@@ -27,11 +27,11 @@ public partial class MRegistry : MRegistry<Resource>
 			return;
 
 		bool correctType = false;
-		Type recordType = record.GetType();
+		Type valueType = record.Value.GetType();
 
 		foreach (var resource in _searchTypes)
 		{
-			if (recordType.IsAssignableFrom(resource.GetType()))
+			if (valueType.IsAssignableFrom(resource.GetType()))
 			{
 				correctType = true;
 				break;
@@ -45,15 +45,15 @@ public partial class MRegistry : MRegistry<Resource>
 		GD.Print($"{nameof(MRegistry)}: Loaded record {file} in registry {this.Id} with value = {record.Value}");
 	}
 
-	public override void _ValidateProperty(Dictionary property)
-	{
-		base._ValidateProperty(property);
+	// public override void _ValidateProperty(Dictionary property)
+	// {
+	// 	base._ValidateProperty(property);
 
-		if (property["name"].AsString() != nameof(_searchTypes))
-			return;
+	// 	if (property["name"].AsString() != nameof(_searchTypes))
+	// 		return;
 		
-		property["type"] = (int)Variant.Type.Array;
-		property["hint"] = (int)PropertyHint.TypeString;
-		property["hint_string"] = $"{(int)Variant.Type.Object}/{(int)PropertyHint.ResourceType}:Resource";
-	}
+	// 	property["type"] = (int)Variant.Type.Array;
+	// 	property["hint"] = (int)PropertyHint.TypeString;
+	// 	property["hint_string"] = $"{(int)Variant.Type.Object}/{(int)PropertyHint.ResourceType}:Resource";
+	// }
 }

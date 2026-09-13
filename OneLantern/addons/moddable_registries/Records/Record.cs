@@ -1,6 +1,7 @@
 using Godot;
 
 [GlobalClass, Icon("res://addons/at-icons/node/thumbtack.svg")]
+[Tool]
 public partial class Record: Record<Resource>
 {
 	[Export]

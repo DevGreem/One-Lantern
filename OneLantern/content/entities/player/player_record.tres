@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_52fum")
 Value = ExtResource("1_uv25c")
-Id = "player123"
+Id = "player"
 metadata/_custom_type_script = "uid://cf3uqqkqovsrv"
