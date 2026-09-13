@@ -29,7 +29,7 @@ public partial class MRegistry : MRegistry<Resource>
 		bool correctType = false;
 		Type recordType = record.GetType();
 
-		foreach (Resource resource in _searchTypes)
+		foreach (var resource in _searchTypes)
 		{
 			if (recordType.IsAssignableFrom(resource.GetType()))
 			{
@@ -43,5 +43,17 @@ public partial class MRegistry : MRegistry<Resource>
 		
 		Query(record.Id, record.QueryType, record.Value);
 		GD.Print($"{nameof(MRegistry)}: Loaded record {file} in registry {this.Id} with value = {record.Value}");
+	}
+
+	public override void _ValidateProperty(Dictionary property)
+	{
+		base._ValidateProperty(property);
+
+		if (property["name"].AsString() != nameof(_searchTypes))
+			return;
+		
+		property["type"] = (int)Variant.Type.Array;
+		property["hint"] = (int)PropertyHint.TypeString;
+		property["hint_string"] = $"{(int)Variant.Type.Object}/{(int)PropertyHint.ResourceType}:Resource";
 	}
 }
